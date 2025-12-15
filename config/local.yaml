@@ -1,0 +1,12 @@
+server:
+  port: 9999
+  host: "localhost"
+database:
+  user: "admin"
+  password: "password"
+  name: "prod_db"
+security:
+  enableTLS: true
+  allowedHosts:
+    - "example.com"
+    - "api.example.com"
