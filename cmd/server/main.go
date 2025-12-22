@@ -2,16 +2,15 @@ package main
 
 import (
 	"fmt"
-	config "go-backend-api/cmd/cli/viper"
-	"go-backend-api/internal/routers"
+	"go-backend-api/internal/global"
+	"go-backend-api/internal/initialize"
+	"strconv"
 )
 
 func main() {
 	//#region config load
-	cfg := config.LoadConfig()
-
-	//start server
-	server := routers.NewRouter()
-	server.Run(fmt.Sprintf(":%d", cfg.GetInt("server.port")))
+	config, router := initialize.Run()
+	fmt.Println("config:", strconv.Itoa(config.GetInt("port")), config.GetString("host"))
+	router.Run(global.Config.Host + ":" + strconv.Itoa(global.Config.Port))
 
 }

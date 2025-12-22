@@ -1,45 +1,22 @@
 package routers
 
 import (
-	"fmt"
-	"go-backend-api/internal/controller"
-	"go-backend-api/response"
+	initialize "go-backend-api/internal/initialize/product"
+	productHttp "go-backend-api/internal/product/controller/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func AA() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		fmt.Println("Middleware before request")
-		// Do something before request
-		response.ErrorResponse(c, 403)
+func InitRouter(db *gorm.DB) *gin.Engine {
 
-		c.Abort()
-		c.Next()
+	router := gin.Default()
 
-		return // Stop processing the request further
+	v1 := router.Group("/api/v1")
 
-		// Do something after request
-		fmt.Println("Middleware after request")
-	}
-}
+	handler := initialize.InitialProduct(db)
 
-func NewRouter() *gin.Engine {
+	productHttp.ProductRouter(v1, handler)
 
-	r := gin.Default()
-
-	v1 := r.Group("/api/v1")
-	{
-		v1.GET("/ping", func(c *gin.Context) {
-			c.JSON(200, gin.H{ /// map string
-				"message": "pong",
-				"status":  200,
-				"data":    nil,
-			})
-		})
-		///user api
-		v1.GET("/user", AA(), controller.NewUserController().GetUser)
-	}
-
-	return r
+	return router
 }

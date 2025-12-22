@@ -24,3 +24,17 @@ func SuccessResponse(c *gin.Context, data interface{}) {
 func ErrorResponse(c *gin.Context, code int) {
 	c.JSON(code, NewResponseData(code, GetMessage(code), nil))
 }
+
+type HandlerFunc func(c *gin.Context) (interface{}, error, int)
+
+func WrapHandler(h HandlerFunc) gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+		data, err, code := h(c)
+		if err != nil {
+			ErrorResponse(c, code)
+			return
+		}
+		SuccessResponse(c, data)
+	}
+}
