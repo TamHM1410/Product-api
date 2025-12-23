@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package hello;
+
+// Thay đổi từ Java sang Go package
+option go_package = "./proto";
+
+// The greeting service definition.
+service Simple {
+  // Sends a greeting - Unary RPC
+  rpc SayHello(HelloRequest) returns (HelloReply) {}
+  
+  // Server streaming RPC
+  rpc StreamHello(HelloRequest) returns (stream HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}

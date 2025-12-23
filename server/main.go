@@ -8,9 +8,11 @@ import (
 )
 
 func main() {
-	//#region config load
+	// Start gRPC server in background
+	go RunGRPCServer()
+	
+	// Load config  start HTTP server
 	config, router := initialize.Run()
 	fmt.Println("config:", strconv.Itoa(config.GetInt("port")), config.GetString("host"))
 	router.Run(global.Config.Host + ":" + strconv.Itoa(global.Config.Port))
-
 }
