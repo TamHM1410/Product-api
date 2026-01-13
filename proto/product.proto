@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "go-backend-api/pb";
+
+import "common.proto";
+
+service ProductSimpleService {
+  rpc CreateOrUpdate (ProductSimpleDTO) returns (ProductSimpleResponse);
+}
+
+
+message VariantDTO{
+  int32 id =1;
+  string name=2;
+  string hexName=3;
+
+}
+
+message ProductSimpleDTO {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+
+  double height = 4;
+  double width  = 5;
+  double depth  = 6;
+
+  VariantDTO variant = 7 ;
+
+
+}
+
+
+
+message ProductSimpleResponse {
+  common.BaseResponse base_response = 1;
+
+  int32 id = 2;
+  string name = 3;
+  string description = 4;
+
+  double height = 5;
+  double width  = 6;
+  double depth  = 7;
+}

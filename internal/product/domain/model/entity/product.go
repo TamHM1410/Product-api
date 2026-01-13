@@ -8,8 +8,11 @@ type ProductModel struct {
 	Name        string  `gorm:"uniqueIndex"`
 	Description string  `gorm:"type:text"`
 	Price       float64 `gorm:"type:decimal(10,2)"`
-	Stock       int     `gorm:"type:int"`
 	Details     string  `gorm:"column:details;type:text"`
+	Height      float64 `gorm:"type:decimal(10,2)"`
+	Width       float64 `gorm:"type:decimal(10,2)"`
+	Length      float64 `gorm:"type:decimal(10,2)"`
+	Depth       float64 `gorm:"type:decimal(10,2)"`
 }
 
 func (ProductModel) TableName() string {

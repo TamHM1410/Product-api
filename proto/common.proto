@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "go-backend-api/pb";  // Bỏ dấu "/" ở đầu
+
+
+enum ErrorType {
+  BUSINESS = 0;
+  TECHNICAL = 1;
+}
+
+message Error {
+  int32 code = 1;      // USER_BLOCKED, INVALID_PASSWORD, USER_EXISTS
+  string message = 2;
+  ErrorType type = 3;
+}
+
+message BaseResponse {
+  bool success = 1;
+  Error error = 2;
+}
